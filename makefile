@@ -1,4 +1,4 @@
-CFLAGS=$(cat compiler_flags.txt//"\n"/" ")
+CFLAGS=$(shell cat compiler_flags.txt)
 
 build/raylib-test-linux.x86_64 : main.cpp
 	mkdir -p build
