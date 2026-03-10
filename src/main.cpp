@@ -13,11 +13,15 @@ int main() {
 	Pacman pacman = Pacman(Vector2{screen_width/2.0,screen_height/2.0});
 
 	while (WindowShouldClose() == false) {
+
+		
+		pacman.process();
+
 		BeginDrawing();
 
 		ClearBackground(BLACK);
-		
-		pacman.process();
+
+		pacman.draw();
 
 		EndDrawing();
 	}
