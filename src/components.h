@@ -4,6 +4,8 @@
 #include <raylib.h>
 #include <raymath.h>
 
+class Entity{};
+
 class IProcessable {
 	public:
 		virtual ~IProcessable() {}	
@@ -23,7 +25,7 @@ class IDrawable {
 		virtual void draw() = 0;
 };
 
-class Pacman : public IProcessable, public IDrawable {
+class Pacman : public Entity, public IProcessable, public IDrawable {
 	const int speed = 64;
 	private:
 		Texture2D texture;
@@ -39,7 +41,7 @@ class Pacman : public IProcessable, public IDrawable {
 		virtual void draw();
 };
 
-class Wall : public IReadible, public IDrawable {
+class Wall :public Entity,public IReadible, public IDrawable {
 	private:
 		Texture2D texture;
 	public:
