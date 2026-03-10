@@ -1,2 +1,5 @@
 -Wall
 -lraylib
+-lstdc++
+-lm
+-v
