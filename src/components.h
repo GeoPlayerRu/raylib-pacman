@@ -4,7 +4,10 @@
 #include <raylib.h>
 #include <raymath.h>
 
-class Entity{};
+class Entity{
+	public:
+		virtual ~Entity(){}
+};
 
 class IProcessable {
 	public:

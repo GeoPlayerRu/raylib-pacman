@@ -21,8 +21,10 @@ class World {
 						  /// Calls draw() on every drawable
 		
 	private:
-		IProcessable* processables;
-		IDrawable* drawables;
+		int processables_count;
+		IProcessable** processables;
+		int drawables_count;
+		IDrawable** drawables;
 };
 
 static World world; /// World singleton
