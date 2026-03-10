@@ -1,3 +1,6 @@
+#ifndef COMPONENTS_H
+#define COMPONENTS_H
+
 #include <raylib.h>
 #include <raymath.h>
 
@@ -21,3 +24,5 @@ class Pacman : IComponent {
 		~Pacman();
 		virtual void process();
 };
+
+#endif
