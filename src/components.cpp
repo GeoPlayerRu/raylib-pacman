@@ -7,7 +7,7 @@
 
 Rectangle Pacman::getTextureRect() const{
 	Rectangle result;
-	result.x = 0;
+	result.x = 16*frame;
 	result.y = facing*16;
 	result.height = 16;
 	result.width = 16;
@@ -17,6 +17,7 @@ Pacman::Pacman() {
 	this->texture = LoadTexture("assets/sprites/pacman.png");
 	this->facing = 0;
 	this->position = {0.,0.};
+	this->frame = 0;
 }
 Pacman::Pacman(Vector2 position) {
 	this->texture = LoadTexture("assets/sprites/pacman.png");
@@ -51,6 +52,18 @@ void Pacman::tick() {
 	if (this->position.y >= 320){
 		this->position.y -= 320;
 	}
+}
+
+void Pacman::process() {
+	this->time += GetFrameTime();
+	if (this->time >= 1.0/this->fps){
+		this->time = 0.;
+		this->animation_tick();
+	}
+}
+
+void Pacman::animation_tick() {
+	this->frame = (this->frame+1)%frame_count;
 }
 
 void Pacman::draw() const {

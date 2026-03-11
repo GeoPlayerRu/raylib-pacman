@@ -12,7 +12,7 @@ int main() {
 
 	SetTargetFPS(60);
 	
-	world = create_world_with(.25);
+	world = create_world_with(1./10.);
 	
 	world.entities.push_back(new Pacman({SCREEN_WIDTH/2,SCREEN_HEIGHT/2}));
 
