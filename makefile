@@ -1,9 +1,10 @@
-CFLAGS=$(shell cat compiler_flags.txt)
+CP=clang
+CFLAGS=$(shell cat compiler_flags.txt | tr '\n' ' ')
 FILES=$(wildcard src/*.cpp)
 
 build/raylib-test-linux.x86_64 : $(FILES)
 	mkdir -p build
-	clang $(FILES) $(CFLAGS) -o build/raylib-test-linux.x86_64
+	$(CP) $(FILES) $(CFLAGS) -o build/raylib-test-linux.x86_64
 
 
 clean :

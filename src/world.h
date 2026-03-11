@@ -4,6 +4,10 @@
 #include "components.h"
 #include <vector>
 
+const int GRID_ROWS = 20;
+const int GRID_COLUMNS = 20;
+const int GRID_CAPACITY = GRID_COLUMNS*GRID_ROWS;
+
 /// Class that holds information about game world
 class World {
 	public:
@@ -11,7 +15,8 @@ class World {
 		~World();
 
 		std::vector<Entity*> entities; /// Main subjects of game world.
-		float seconds_per_tick; 	  /// Internal clock speed
+		Entity* grid[GRID_CAPACITY];   /// Grid representation
+		float seconds_per_tick; 	   /// Internal clock speed
 		
 		void setup();     /// Sets up game world. 
 					      /// Should be called once when entites are set.
@@ -19,14 +24,16 @@ class World {
 		void process();   /// Should be called every frame. Calls
 						  /// process() on every entity
 
-		void draw();	  /// Should be called at the end of frame.
+		void draw() const;	  /// Should be called at the end of frame.
 						  /// Calls draw() on every entity	
 	private:
 		float clock;
+		void update_grid();
 };
 
 static World world; /// World singleton
 
 World create_world_with(float seconds_per_tick);
+int indexify_position(Vector2 vector);
 
 #endif

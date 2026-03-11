@@ -5,7 +5,7 @@
 // Pacman definitions
 
 
-Rectangle Pacman::getTextureRect(){
+Rectangle Pacman::getTextureRect() const{
 	Rectangle result;
 	result.x = 0;
 	result.y = facing*16;
@@ -53,7 +53,7 @@ void Pacman::tick() {
 	}
 }
 
-void Pacman::draw() {
+void Pacman::draw() const {
 	// Drawing
 	DrawTextureRec(this->texture, this->getTextureRect(), this->position, WHITE);
 }
@@ -72,7 +72,7 @@ void Wall::ready() {
 	// Set neigbors depending on state
 }
 
-void Wall::draw() {
+void Wall::draw() const {
 	// Draw based on neighbors
 }
 

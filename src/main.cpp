@@ -35,3 +35,7 @@ int main() {
 
 	return 0;
 }
+
+void load_map(const char * path){
+
+}

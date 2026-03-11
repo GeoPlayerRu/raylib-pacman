@@ -2,4 +2,3 @@
 -lraylib
 -lstdc++
 -lm
--v
