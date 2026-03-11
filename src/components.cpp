@@ -1,3 +1,4 @@
+#include <iostream>
 #include <raylib.h>
 #include <raymath.h>
 #include "components.h"
@@ -25,9 +26,7 @@ Pacman::Pacman(Vector2 position) {
 Pacman::~Pacman() {
 	UnloadTexture(this->texture);
 }
-void Pacman::process() {
-	float delta = GetFrameTime();
-	
+void Pacman::tick() {
 	// Input handling
 	if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) {this->facing=1;}
 	if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) {this->facing=2;}
@@ -37,12 +36,14 @@ void Pacman::process() {
 	// Movement in direction
 	double angle = PI/2.0*facing;
 	Vector2 direction = {(float)(cos(angle)),(float)(sin(-angle))};
-	this->position = Vector2Add(this->position,Vector2Scale(direction, delta * (float)speed)); 
+	this->position = Vector2Add(this->position,Vector2Scale(direction, (float)speed)); 
+
 	}
 
 void Pacman::draw() {
 	// Drawing
 	DrawTextureRec(this->texture, this->getTextureRect(), this->position, WHITE);
+	DrawText(TextFormat("Position: %"), int posX, int posY, int fontSize, Color color)
 }
 
 // Wall definitions

@@ -7,29 +7,16 @@
 class Entity{
 	public:
 		virtual ~Entity(){}
+		
+		virtual void ready() {}
+		virtual void process() {}
+		virtual void draw() {}
+		virtual void tick() {}
 };
 
-class IProcessable {
-	public:
-		virtual ~IProcessable() {}	
-		// Called every frame
-		virtual void process() = 0;
-};
-class IReadible {
-	public:
-		virtual ~IReadible() {}	
-		// Called when the level is set up
-		virtual void ready() = 0;
-};
 
-class IDrawable {
-	public:
-		virtual ~IDrawable() {}	
-		virtual void draw() = 0;
-};
-
-class Pacman : public Entity, public IProcessable, public IDrawable {
-	const int speed = 64;
+class Pacman : public Entity{
+	const int speed = 16;
 	private:
 		Texture2D texture;
 		Vector2 position;
@@ -40,18 +27,18 @@ class Pacman : public Entity, public IProcessable, public IDrawable {
 		Pacman();
 		Pacman(Vector2 position);
 		~Pacman();
-		virtual void process();
-		virtual void draw();
+		void tick() override;
+		void draw() override;
 };
 
-class Wall :public Entity,public IReadible, public IDrawable {
+class Wall : public Entity {
 	private:
 		Texture2D texture;
 	public:
 		Wall();
 		~Wall();
-		virtual void ready();
-		virtual void draw();
+		void ready() override;
+		void draw() override;
 };
 
 #endif

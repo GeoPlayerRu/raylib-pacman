@@ -2,31 +2,30 @@
 #define WORLD_H
 
 #include "components.h"
+#include <vector>
 
 /// Class that holds information about game world
 class World {
 	public:
-		const int GRID_SIZE = 20*20;
 		World();
-		~World();	
-		Entity* entities; /// Main subjects of game world.
+
+		std::vector<Entity> entities; /// Main subjects of game world.
+		float seconds_per_tick; 	  /// Internal clock speed
 		
 		void setup();     /// Sets up game world. 
 					      /// Should be called once when entites are set.
 
 		void process();   /// Should be called every frame. Calls
-						  /// process() on every processable
+						  /// process() on every entity
 
 		void draw();	  /// Should be called at the end of frame.
-						  /// Calls draw() on every drawable
-		
+						  /// Calls draw() on every entity	
 	private:
-		int processables_count;
-		IProcessable** processables;
-		int drawables_count;
-		IDrawable** drawables;
+		float clock;
 };
 
 static World world; /// World singleton
+
+World create_world_with(float seconds_per_tick);
 
 #endif
