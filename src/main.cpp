@@ -2,11 +2,14 @@
 #include <raymath.h>
 #include "components.h"
 #include "world.h"
+#include "maploader.h"
 
 const int SCREEN_HEIGHT = 320;
 const int SCREEN_WIDTH = 320;
 
 int main() {
+	loadmap();
+	return 0;
 	
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Test game");
 
@@ -34,8 +37,4 @@ int main() {
 	CloseWindow();
 
 	return 0;
-}
-
-void load_map(const char * path){
-
 }
