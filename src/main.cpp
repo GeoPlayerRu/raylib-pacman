@@ -3,17 +3,18 @@
 #include "components.h"
 #include "world.h"
 
-int main() {
-	const int screen_height = 320;
-	const int screen_width = 320;
+const int SCREEN_HEIGHT = 320;
+const int SCREEN_WIDTH = 320;
 
-	InitWindow(screen_width, screen_height, "Test game");
+int main() {
+	
+	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Test game");
 
 	SetTargetFPS(60);
 	
-	world = create_world_with(1.0);
+	world = create_world_with(.25);
 	
-	world.entities.push_back(Pacman({screen_width/2,screen_height/2}));
+	world.entities.push_back(new Pacman({SCREEN_WIDTH/2,SCREEN_HEIGHT/2}));
 
 	world.setup();
 
@@ -25,7 +26,6 @@ int main() {
 
 		ClearBackground(BLACK);
 		
-		DrawText(TextFormat("Entities: %i",world.entities.size()),0,0, 14,WHITE);
 		world.draw();
 
 		EndDrawing();

@@ -7,18 +7,24 @@ World::World(){
 	this->clock = 0;
 }
 
+World::~World(){
+	for(int i = 0; i < this->entities.size();i++) {
+		delete this->entities[i];
+	}
+}
+
 void World::setup(){
 	for(int i = 0; i < this->entities.size(); i++)
-		this->entities[i].ready();
+		this->entities[i]->ready();
 }
 
 void World::process(){
 	this->clock += GetFrameTime();
 
 	for(int i = 0; i < this->entities.size(); i++) {
-		this->entities[i].process();
+		this->entities[i]->process();
 		if (this->clock>=this->seconds_per_tick) {
-			this->entities[i].tick();
+			this->entities[i]->tick();
 		}
 	}
 
@@ -28,8 +34,8 @@ void World::process(){
 }
 
 void World::draw() {
-	for(int i = 0; i< this->entities.size(); i++) {
-		this->entities[i].draw();
+	for(int i = 0; i < this->entities.size(); i++) {
+		this->entities[i]->draw();
 	}
 }
 

@@ -1,9 +1,9 @@
-#include <iostream>
 #include <raylib.h>
 #include <raymath.h>
 #include "components.h"
 
 // Pacman definitions
+
 
 Rectangle Pacman::getTextureRect(){
 	Rectangle result;
@@ -21,7 +21,7 @@ Pacman::Pacman() {
 Pacman::Pacman(Vector2 position) {
 	this->texture = LoadTexture("assets/sprites/pacman.png");
 	this->facing = 0;
-	this->position = position;
+	this->position = {0.,0.};
 }
 Pacman::~Pacman() {
 	UnloadTexture(this->texture);
@@ -38,12 +38,24 @@ void Pacman::tick() {
 	Vector2 direction = {(float)(cos(angle)),(float)(sin(-angle))};
 	this->position = Vector2Add(this->position,Vector2Scale(direction, (float)speed)); 
 
+	// Bound check
+	if (this->position.x < 0){
+		this->position.x += 320;
 	}
+	if (this->position.y < 0){
+		this->position.y += 320;
+	}
+	if (this->position.x >= 320){
+		this->position.x -= 320;
+	}
+	if (this->position.y >= 320){
+		this->position.y -= 320;
+	}
+}
 
 void Pacman::draw() {
 	// Drawing
 	DrawTextureRec(this->texture, this->getTextureRect(), this->position, WHITE);
-	DrawText(TextFormat("Position: %"), int posX, int posY, int fontSize, Color color)
 }
 
 // Wall definitions

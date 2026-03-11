@@ -8,8 +8,9 @@
 class World {
 	public:
 		World();
+		~World();
 
-		std::vector<Entity> entities; /// Main subjects of game world.
+		std::vector<Entity*> entities; /// Main subjects of game world.
 		float seconds_per_tick; 	  /// Internal clock speed
 		
 		void setup();     /// Sets up game world. 
