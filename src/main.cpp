@@ -1,7 +1,6 @@
 #include <raylib.h>
 #include <raymath.h>
 #include "world.h"
-#include "maploader.h"
 
 const int SCREEN_HEIGHT = 320;
 const int SCREEN_WIDTH = 320;
@@ -15,7 +14,7 @@ int main() {
 	
 	World& world = get_world();
 
-	loadmap(world);
+	load_world(world,"assets/map");
 
 	world.setup();
 

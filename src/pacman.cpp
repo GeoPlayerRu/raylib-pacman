@@ -1,3 +1,4 @@
+#include <iostream>
 #include <raylib.h>
 #include <raymath.h>
 #include "components.h"
@@ -19,6 +20,7 @@ Pacman::Pacman() {
 	this->facing = 0;
 	this->position = {0.,0.};
 	this->frame = 0;
+	this->time = 0;
 }
 Pacman::Pacman(Vector2 position) {
 	this->texture = LoadTexture("assets/sprites/pacman.png");
@@ -40,22 +42,24 @@ void Pacman::tick() {
 	Vector2 direction = {(float)(cos(angle)),(float)(sin(-angle))};
 	Vector2 new_position = Vector2Add(this->position,Vector2Scale(direction, (float)speed)); 
 	
-	if (get_world().grid[indexify_position(new_position)] == nullptr){
+	World& world = get_world();
+
+	if (world.grid[indexify_position(new_position)] == nullptr){
 		this->position=new_position;
 	}
-
+	
 	// Bound check
-	if (this->position.x < 16){
-		this->position.x += 288;
+	if (this->position.x < world.bound_offset*CELL_SIZE){
+		this->position.x += world.width-2*world.bound_offset*CELL_SIZE;
 	}
-	if (this->position.y < 16){
-		this->position.y += 288;
+	if (this->position.y < world.bound_offset*CELL_SIZE){
+		this->position.y += world.height-2*world.bound_offset*CELL_SIZE;
 	}
-	if (this->position.x >= 304){
-		this->position.x -= 288;
+	if (this->position.x >= world.width-(world.bound_offset-1)*CELL_SIZE){
+		this->position.x -= world.width-2*world.bound_offset*CELL_SIZE;
 	}
-	if (this->position.y >= 304){
-		this->position.y -= 288;
+	if (this->position.y >= world.height-(world.bound_offset-1)*CELL_SIZE){
+		this->position.y -= world.height-2*world.bound_offset*CELL_SIZE;
 	}
 }
 

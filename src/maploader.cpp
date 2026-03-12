@@ -1,22 +1,31 @@
-#include "maploader.h"
 #include <fstream>
 #include <iostream>
 #include "components.h"
 #include "world.h"
 
-void loadmap(World& world) {
+void load_world(World& world,const char* path) {
 	std::ifstream in;
-	in.open("assets/map");
+	in.open(path);
 	
 	int x = 0;
 	int y = 0;
+
+	int max_x = 0;
+	int max_y = 0;
 
 	while(in.eof() == false)
 	{
 		char c;
 		in.get(c);
 		
+
+		if (max_x < x)
+			max_x = x;
+		if (max_y < y)
+			max_y = y;
+
 		switch (c) {
+
 			case '#':
 				{
 					Wall* wall = new Wall;
@@ -35,6 +44,7 @@ void loadmap(World& world) {
 	
 				break;
 			case '\n':
+				
 				x = 0;
 				y++;
 				break;
@@ -42,6 +52,12 @@ void loadmap(World& world) {
 				x++;
 				break;
 		}
+		
+		
+		
 	}
+	
+	world.height = CELL_SIZE * (max_y-1);
+	world.width = CELL_SIZE * (max_x-1);
 }
 

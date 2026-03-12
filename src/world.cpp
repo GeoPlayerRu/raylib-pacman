@@ -8,6 +8,7 @@ World::World(){
 	this->seconds_per_tick = 0;
 	this->clock = 0;
 	this->debug = false;
+	this->bound_offset = 1;
 }
 
 World::~World(){
