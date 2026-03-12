@@ -1,6 +1,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include "components.h"
+#include "world.h"
 
 // Pacman definitions
 
@@ -37,7 +38,11 @@ void Pacman::tick() {
 	// Movement in direction
 	double angle = PI/2.0*facing;
 	Vector2 direction = {(float)(cos(angle)),(float)(sin(-angle))};
-	this->position = Vector2Add(this->position,Vector2Scale(direction, (float)speed)); 
+	Vector2 new_position = Vector2Add(this->position,Vector2Scale(direction, (float)speed)); 
+	
+	if (get_world().grid[indexify_position(new_position)] == nullptr){
+		this->position=new_position;
+	}
 
 	// Bound check
 	if (this->position.x < 0){

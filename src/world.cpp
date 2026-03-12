@@ -1,5 +1,7 @@
 #include "world.h"
+#include "components.h"
 #include <raylib.h>
+#include <string>
 
 World::World(){
 	this->entities = {};
@@ -50,7 +52,26 @@ void World::draw() const {
 
 	DrawText(TextFormat("entities: %i",this->entities.size()), 0, 0, 14, WHITE);
 	DrawText(TextFormat("seconds_per_tick: %f",this->seconds_per_tick), 0, 16, 14, WHITE);
+	if (IsKeyDown(KEY_F4))
+	{
+		std::string str = "";
+		for(int i = 0; i < GRID_CAPACITY; i++)
+		{
+			if (i!=0 && i%GRID_COLUMNS==0)
+			{
+				str += '\n';
+			}
+			if (dynamic_cast<Wall*>(grid[i]))
+					str += '#';
+			else if (dynamic_cast<Pacman*>(grid[i]))
+				str += 'P';
+			else
+				str += ' ';
+		}
+		DrawText(str.c_str(), 32, 0, 14, WHITE);
+	}
 }
+
 
 int indexify_position(Vector2 vector){
 	return (int)(vector.x / 16.0) + GRID_COLUMNS * (int)(vector.y / 16.0);
@@ -71,10 +92,11 @@ void World::update_grid() {
 
 
 
-World create_world_with(float seconds_per_tick){
-	World result = World();
-	
-	result.seconds_per_tick = seconds_per_tick;
+void create_world_with(float seconds_per_tick){
+	get_world().seconds_per_tick = seconds_per_tick;
+}
 
-	return result;
+World& get_world() {
+	static World world;
+	return world;
 }

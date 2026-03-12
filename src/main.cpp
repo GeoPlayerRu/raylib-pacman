@@ -11,8 +11,10 @@ int main() {
 
 	SetTargetFPS(60);
 	
-	world = create_world_with(1./10.);
+	create_world_with(1./10.);
 	
+	World& world = get_world();
+
 	loadmap(world);
 
 	world.setup();

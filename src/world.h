@@ -1,7 +1,9 @@
 #ifndef WORLD_H
+
 #define WORLD_H
 
 #include "components.h"
+#include <string>
 #include <vector>
 
 const int GRID_ROWS = 20;
@@ -31,9 +33,8 @@ class World {
 		void update_grid();
 };
 
-static World world; /// World singleton
-
-World create_world_with(float seconds_per_tick);
+void create_world_with(float seconds_per_tick);
+World& get_world(); // Thanks, 2ndbeam, helps a lot
 int indexify_position(Vector2 vector);
 
 #endif
