@@ -1,5 +1,4 @@
 #include <fstream>
-#include <iostream>
 #include "components.h"
 #include "world.h"
 
@@ -10,19 +9,10 @@ void load_world(World& world,const char* path) {
 	int x = 0;
 	int y = 0;
 
-	int max_x = 0;
-	int max_y = 0;
-
 	while(in.eof() == false)
 	{
 		char c;
-		in.get(c);
-		
-
-		if (max_x < x)
-			max_x = x;
-		if (max_y < y)
-			max_y = y;
+		in.get(c);	
 
 		switch (c) {
 
@@ -57,7 +47,37 @@ void load_world(World& world,const char* path) {
 		
 	}
 	
-	world.height = CELL_SIZE * (max_y-1);
-	world.width = CELL_SIZE * (max_x-1);
 }
 
+Vector2i get_map_size(const char* path){
+	std::ifstream in;
+	in.open(path);
+	
+	int x = 0;
+	int y = 0;
+
+	int max_x = 0;
+	int max_y = 0;
+
+	while(in.eof() == false)
+	{
+		char c;
+		in.get(c);
+		
+
+		if (max_x < x)
+			max_x = x;
+		if (max_y < y)
+			max_y = y;
+
+		if(c == '\n'){			
+			x = 0;
+			y++;
+		}
+		else {
+			x++;
+		}
+	}
+	
+	return {max_x * CELL_SIZE,max_y * CELL_SIZE};
+}

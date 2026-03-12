@@ -2,20 +2,19 @@
 #include <raymath.h>
 #include "world.h"
 
-const int SCREEN_HEIGHT = 320;
-const int SCREEN_WIDTH = 320;
-
-int main() {
-	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Test game");
-
-	SetTargetFPS(60);
-	
+int main() {	
 	create_world_with(1./10.);
 	
 	World& world = get_world();
+	Vector2i window_size = get_map_size("assets/map");
+	
+	InitWindow(window_size.x, window_size.y, "Zoomba");
 
+	world.set_size(window_size);
 	load_world(world,"assets/map");
+	
 
+	SetTargetFPS(60);
 	world.setup();
 
 	while (WindowShouldClose() == false) {

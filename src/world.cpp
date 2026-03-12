@@ -91,7 +91,10 @@ void World::update_grid() {
 	}
 }
 
-
+void World::set_size(Vector2i size){
+	this->width = size.x;
+	this->height = size.y; 
+}
 
 void create_world_with(float seconds_per_tick){
 	get_world().seconds_per_tick = seconds_per_tick;
