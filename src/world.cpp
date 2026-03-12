@@ -5,6 +5,7 @@ World::World(){
 	this->entities = {};
 	this->seconds_per_tick = 0;
 	this->clock = 0;
+	this->debug = false;
 }
 
 World::~World(){
@@ -20,6 +21,11 @@ void World::setup(){
 
 void World::process(){
 	this->clock += GetFrameTime();
+
+	if(IsKeyPressed(KEY_F2))
+		this->seconds_per_tick-=0.025;
+	if(IsKeyPressed(KEY_F3))
+		this->seconds_per_tick+=0.025;
 
 	this->update_grid();
 
@@ -39,6 +45,11 @@ void World::draw() const {
 	for(int i = 0; i < this->entities.size(); i++) {
 		this->entities[i]->draw();
 	}
+	if (this->debug == false)
+		return;
+
+	DrawText(TextFormat("entities: %i",this->entities.size()), 0, 0, 14, WHITE);
+	DrawText(TextFormat("seconds_per_tick: %f",this->seconds_per_tick), 0, 16, 14, WHITE);
 }
 
 int indexify_position(Vector2 vector){

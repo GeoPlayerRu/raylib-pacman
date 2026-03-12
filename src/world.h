@@ -13,7 +13,7 @@ class World {
 	public:
 		World();
 		~World();
-
+		bool debug;
 		std::vector<Entity*> entities; /// Main subjects of game world.
 		Entity* grid[GRID_CAPACITY];   /// Grid representation
 		float seconds_per_tick; 	   /// Internal clock speed

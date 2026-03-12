@@ -1,6 +1,8 @@
 #ifndef MAPLOADER_H
 #define MAPLOADER_H
 
-void loadmap();
+#include "world.h"
+
+void loadmap(World& world);
 
 #endif

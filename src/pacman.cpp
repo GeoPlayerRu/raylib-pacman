@@ -71,22 +71,5 @@ void Pacman::draw() const {
 	DrawTextureRec(this->texture, this->getTextureRect(), this->position, WHITE);
 }
 
-// Wall definitions
-
-Wall::Wall() {
-	this->texture = LoadTexture("assets/sprites/walls.png");
-}
-
-Wall::~Wall() {
-	UnloadTexture(this->texture);	
-}
-
-void Wall::ready() {
-	// Set neigbors depending on state
-}
-
-void Wall::draw() const {
-	// Draw based on neighbors
-}
 
 
