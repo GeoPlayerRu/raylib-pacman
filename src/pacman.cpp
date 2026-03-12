@@ -45,17 +45,17 @@ void Pacman::tick() {
 	}
 
 	// Bound check
-	if (this->position.x < 0){
-		this->position.x += 320;
+	if (this->position.x < 16){
+		this->position.x += 288;
 	}
-	if (this->position.y < 0){
-		this->position.y += 320;
+	if (this->position.y < 16){
+		this->position.y += 288;
 	}
-	if (this->position.x >= 320){
-		this->position.x -= 320;
+	if (this->position.x >= 304){
+		this->position.x -= 288;
 	}
-	if (this->position.y >= 320){
-		this->position.y -= 320;
+	if (this->position.y >= 304){
+		this->position.y -= 288;
 	}
 }
 
