@@ -37,7 +37,7 @@ void Pacman::tick() {
 	
 	World& world = get_world();
 
-	if (world.grid[indexify_position(new_position)] == nullptr){
+	if (dynamic_cast<Wall*>(world.grid[indexify_position(new_position)]) == nullptr){
 		this->position=new_position;
 	}
 	
