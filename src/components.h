@@ -15,6 +15,10 @@ class Entity{
 		virtual void process() {}
 		virtual void draw() const {}
 		virtual void tick() {}
+		virtual void collision(Entity* with) {}
+		void queue_free();
+	private:
+		bool free_queued;
 };
 
 
@@ -36,6 +40,7 @@ class Pacman : public Entity{
 		void process() override;
 		void animation_tick();
 		void draw() const override;
+		void collision(Entity* with) override;
 };
 
 class Wall : public Entity {

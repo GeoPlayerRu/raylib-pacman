@@ -73,5 +73,12 @@ void Pacman::draw() const {
 	DrawTextureRec(this->texture.get_texture(), this->getTextureRect(), this->position, WHITE);
 }
 
+void Pacman::collision(Entity* with){
+	Scorepoint* score = dynamic_cast<Scorepoint*>(with);
+	if (score != nullptr) {
+		score->queue_free();
+	}
+
+}
 
 

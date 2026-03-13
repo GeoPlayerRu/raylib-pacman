@@ -92,6 +92,13 @@ void World::update_grid() {
 		int indexified_position = indexify_position(this->entities[i]->position);
 		if (indexified_position < 0 || indexified_position >= GRID_CAPACITY)
 			continue;
+		if(grid[indexified_position] != nullptr){
+			Entity* entity = this->entities[i]; 
+			grid[indexified_position]->collision(entity);
+			if(entity != nullptr && grid[indexified_position] != nullptr && grid[indexified_position] != entity){
+				entity->collision(grid[indexified_position]);
+			}
+		}
 		grid[indexified_position] = this->entities[i];
 	}
 }

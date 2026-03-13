@@ -1,10 +1,8 @@
 #include "components.h"
 #include "world.h"
-#include <iostream>
 #include <raylib.h>
 
 Wall::Wall() {
-	std::cout << get_world().get_atlas() <<'\n';
 	this->texture = TextureAtlas(get_world().get_atlas(),0,64,16,16);
 }
 
