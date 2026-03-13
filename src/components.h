@@ -47,4 +47,12 @@ class Wall : public Entity {
 		void draw() const override;
 };
 
+class Scorepoint : public Entity {
+	private:
+		TextureAtlas texture;
+	public:
+		Scorepoint();
+		void draw() const override;
+};
+
 #endif

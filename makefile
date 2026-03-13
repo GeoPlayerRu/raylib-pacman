@@ -16,5 +16,7 @@ release: build/linux/raylib-test-linux-release
 
 debug: build/linux/raylib-test-linux-debug
 
+all: release debug
+
 clean :
 	rm -r build/*

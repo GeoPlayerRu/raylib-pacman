@@ -39,6 +39,11 @@ void load_world(World& world,const char* path) {
 				y++;
 				break;
 			default:
+				{
+					Scorepoint* point = new Scorepoint;
+					point->position = {(float)x*16,(float)y*16};
+					world.entities.push_back(point);
+				}
 				x++;
 				break;
 		}
