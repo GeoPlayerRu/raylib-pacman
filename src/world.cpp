@@ -15,6 +15,11 @@ World::~World(){
 	for(int i = 0; i < this->entities.size();i++) {
 		delete this->entities[i];
 	}
+	UnloadTexture(this->texture_atlas);
+}
+
+void World::load_atlas() {	
+	this->texture_atlas = LoadTexture("assets/atlas.png");
 }
 
 void World::setup(){
@@ -96,6 +101,10 @@ void World::set_size(Vector2i size){
 	this->height = size.y; 
 }
 
+Texture2D* World::get_atlas() {
+	return &this->texture_atlas;
+}
+
 void create_world_with(float seconds_per_tick){
 	get_world().seconds_per_tick = seconds_per_tick;
 }
@@ -104,3 +113,5 @@ World& get_world() {
 	static World world;
 	return world;
 }
+
+

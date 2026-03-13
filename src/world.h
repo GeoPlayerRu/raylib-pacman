@@ -3,6 +3,7 @@
 #define WORLD_H
 
 #include "components.h"
+#include <raylib.h>
 #include <string>
 #include <vector>
 
@@ -38,9 +39,12 @@ class World {
 		void draw() const;	  /// Should be called at the end of frame.
 						  /// Calls draw() on every entity	
 		void set_size(Vector2i);
+		void load_atlas();
+		Texture2D* get_atlas();
 	private:
 		float clock;
 		void update_grid();
+		Texture2D texture_atlas;
 };
 
 void create_world_with(float seconds_per_tick);

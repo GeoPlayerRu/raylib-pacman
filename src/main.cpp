@@ -10,6 +10,7 @@ int main() {
 	
 	InitWindow(window_size.x, window_size.y, "Zoomba");
 
+	world.load_atlas();
 	world.set_size(window_size);
 	load_world(world,"assets/map");
 	

@@ -1,6 +1,7 @@
 #ifndef COMPONENTS_H
 #define COMPONENTS_H
 
+#include "atlas.h"
 #include <raylib.h>
 #include <raymath.h>
 
@@ -22,7 +23,7 @@ class Pacman : public Entity{
 	const int frame_count = 7;
 	const int fps = 24;
 	private:
-		Texture2D texture;
+		TextureAtlas texture;
 		int facing;
 		Rectangle getTextureRect() const;
 	public:
@@ -31,7 +32,6 @@ class Pacman : public Entity{
 
 		Pacman();
 		Pacman(Vector2 position);
-		~Pacman();
 		void tick() override;
 		void process() override;
 		void animation_tick();
@@ -40,10 +40,9 @@ class Pacman : public Entity{
 
 class Wall : public Entity {
 	private:
-		Texture2D texture;
+		TextureAtlas texture;
 	public:
 		Wall();
-		~Wall();
 		void ready() override;
 		void draw() const override;
 };

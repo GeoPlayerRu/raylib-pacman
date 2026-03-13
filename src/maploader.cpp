@@ -44,7 +44,6 @@ void load_world(World& world,const char* path) {
 		}
 		
 		
-		
 	}
 	
 }

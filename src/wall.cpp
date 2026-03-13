@@ -1,12 +1,11 @@
 #include "components.h"
+#include "world.h"
+#include <iostream>
 #include <raylib.h>
 
 Wall::Wall() {
-	this->texture = LoadTexture("assets/sprites/wall.png");
-}
-
-Wall::~Wall() {
-	UnloadTexture(this->texture);	
+	std::cout << get_world().get_atlas() <<'\n';
+	this->texture = TextureAtlas(get_world().get_atlas(),0,64,16,16);
 }
 
 void Wall::ready() {
@@ -15,5 +14,5 @@ void Wall::ready() {
 
 void Wall::draw() const {
 	// Draw based on neighbors
-	DrawTexture(this->texture, this->position.x, this->position.y, WHITE);
+	DrawTextureRec(this->texture.get_texture(), this->texture.full_view(), this->position, WHITE);
 }

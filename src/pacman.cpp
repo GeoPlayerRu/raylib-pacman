@@ -1,6 +1,6 @@
-#include <iostream>
 #include <raylib.h>
 #include <raymath.h>
+#include "atlas.h"
 #include "components.h"
 #include "world.h"
 
@@ -8,28 +8,21 @@
 
 
 Rectangle Pacman::getTextureRect() const{
-	Rectangle result;
-	result.x = 16*frame;
-	result.y = facing*16;
-	result.height = 16;
-	result.width = 16;
-	return result;
-}
+	return this->texture.rect_view(16*frame, facing*16, 16, 16);
+	}
 Pacman::Pacman() {
-	this->texture = LoadTexture("assets/sprites/pacman.png");
+	this->texture = TextureAtlas(get_world().get_atlas(),0,0,112,64);
 	this->facing = 0;
 	this->position = {0.,0.};
 	this->frame = 0;
 	this->time = 0;
 }
 Pacman::Pacman(Vector2 position) {
-	this->texture = LoadTexture("assets/sprites/pacman.png");
+	this->texture = TextureAtlas(get_world().get_atlas(),0,0,112,64);
 	this->facing = 0;
 	this->position = {0.,0.};
 }
-Pacman::~Pacman() {
-	UnloadTexture(this->texture);
-}
+
 void Pacman::tick() {
 	// Input handling
 	if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) {this->facing=1;}
@@ -77,7 +70,7 @@ void Pacman::animation_tick() {
 
 void Pacman::draw() const {
 	// Drawing
-	DrawTextureRec(this->texture, this->getTextureRect(), this->position, WHITE);
+	DrawTextureRec(this->texture.get_texture(), this->getTextureRect(), this->position, WHITE);
 }
 
 
