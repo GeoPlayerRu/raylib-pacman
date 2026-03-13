@@ -55,10 +55,10 @@ void Pacman::tick() {
 	if (this->position.y < world.bound_offset*CELL_SIZE){
 		this->position.y += world.height-2*world.bound_offset*CELL_SIZE;
 	}
-	if (this->position.x >= world.width-(world.bound_offset-1)*CELL_SIZE){
+	if (this->position.x >= world.width-world.bound_offset*CELL_SIZE){
 		this->position.x -= world.width-2*world.bound_offset*CELL_SIZE;
 	}
-	if (this->position.y >= world.height-(world.bound_offset-1)*CELL_SIZE){
+	if (this->position.y >= world.height-world.bound_offset*CELL_SIZE){
 		this->position.y -= world.height-2*world.bound_offset*CELL_SIZE;
 	}
 }
