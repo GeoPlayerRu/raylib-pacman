@@ -37,7 +37,7 @@ void Pacman::tick() {
 	
 	World& world = get_world();
 
-	if (dynamic_cast<Wall*>(world.grid[indexify_position(new_position)]) == nullptr){
+	if (dynamic_cast<Wall*>(world.grid[world.indexify_position(new_position)]) == nullptr){
 		this->position=new_position;
 	}
 	
@@ -77,6 +77,7 @@ void Pacman::collision(Entity* with){
 	Scorepoint* score = dynamic_cast<Scorepoint*>(with);
 	if (score != nullptr) {
 		score->queue_free();
+		get_world().points+=10;
 	}
 
 }

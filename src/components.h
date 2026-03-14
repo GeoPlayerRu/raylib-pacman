@@ -17,6 +17,7 @@ class Entity{
 		virtual void tick() {}
 		virtual void collision(Entity* with) {}
 		void queue_free();
+		bool get_free_flag();
 	private:
 		bool free_queued;
 };

@@ -1,5 +1,6 @@
 #include "world.h"
 #include "components.h"
+#include <cstdlib>
 #include <raylib.h>
 #include <string>
 
@@ -42,10 +43,30 @@ void World::process(){
 		if (this->clock>=this->seconds_per_tick) {
 			this->entities[i]->tick();
 		}
+
+		// Collision check
+		for(int j = i+1; j < this->entities.size(); j++)
+			if (abs(this->entities[j]->position.x-this->entities[i]->position.x) < CELL_SIZE/2 && abs(this->entities[j]->position.y-this->entities[i]->position.y) < CELL_SIZE/2){
+				this->entities[j]->collision(this->entities[i]);
+				this->entities[i]->collision(this->entities[j]);
+			}
 	}
 
 	if (this->clock>=this->seconds_per_tick) {
 		this->clock = 0;
+	}
+	
+	// Check for freed. Very very bad loop
+	bool freed_continue = true;
+	while (freed_continue) {
+		freed_continue = false;
+
+		for(int i = 0; i < this->entities.size(); i++)
+			if (this->entities[i]->get_free_flag()) {
+				this->entities.erase(this->entities.begin()+i);
+				freed_continue = true;
+				break;
+			}
 	}
 }
 
@@ -61,9 +82,9 @@ void World::draw() const {
 	if (IsKeyDown(KEY_F4))
 	{
 		std::string str = "";
-		for(int i = 0; i < GRID_CAPACITY; i++)
+		for(int i = 0; i < this->get_capacity(); i++)
 		{
-			if (i!=0 && i%GRID_COLUMNS==0)
+			if (i!=0 && i%this->get_columns()==0)
 			{
 				str += '\n';
 			}
@@ -79,26 +100,19 @@ void World::draw() const {
 }
 
 
-int indexify_position(Vector2 vector){
-	return (int)(vector.x / 16.0) + GRID_COLUMNS * (int)(vector.y / 16.0);
+int World::indexify_position(Vector2 vector){
+	return (int)(vector.x / 16.0) + this->get_columns() * (int)(vector.y / 16.0);
 }
 
 void World::update_grid() {
-	for(int i = 0; i < GRID_CAPACITY; i++)
+	for(int i = 0; i < this->get_capacity(); i++)
 		this->grid[i] = nullptr;
 	
 	for(int i = 0; i < this->entities.size(); i++)
 	{
 		int indexified_position = indexify_position(this->entities[i]->position);
-		if (indexified_position < 0 || indexified_position >= GRID_CAPACITY)
+		if (indexified_position < 0 || indexified_position >= this->get_capacity() || grid[indexified_position] != nullptr)
 			continue;
-		if(grid[indexified_position] != nullptr){
-			Entity* entity = this->entities[i]; 
-			grid[indexified_position]->collision(entity);
-			if(entity != nullptr && grid[indexified_position] != nullptr && grid[indexified_position] != entity){
-				entity->collision(grid[indexified_position]);
-			}
-		}
 		grid[indexified_position] = this->entities[i];
 	}
 }
@@ -106,6 +120,21 @@ void World::update_grid() {
 void World::set_size(Vector2i size){
 	this->width = size.x;
 	this->height = size.y; 
+	if(this->grid != nullptr)
+		delete [] this->grid;
+	this->grid = new Entity*[this->get_capacity()];
+}
+
+int World::get_capacity() const{
+	return this->get_columns()*this->get_rows();
+}
+
+int World::get_rows() const{
+	return this->height/CELL_SIZE;
+}
+
+int World::get_columns() const{
+	return this->width/CELL_SIZE;
 }
 
 Texture2D* World::get_atlas() {

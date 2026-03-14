@@ -38,6 +38,9 @@ void load_world(World& world,const char* path) {
 				x = 0;
 				y++;
 				break;
+			case '-':
+				x++;
+				break;
 			default:
 				{
 					Scorepoint* point = new Scorepoint;
@@ -45,6 +48,7 @@ void load_world(World& world,const char* path) {
 					world.entities.push_back(point);
 				}
 				x++;
+
 				break;
 		}
 		

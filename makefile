@@ -10,7 +10,7 @@ build/linux/raylib-test-linux-debug: $(FILES)
 
 build/linux/raylib-test-linux-release: $(FILES)
 	mkdir -p build/linux
-	$(CP) $(FILES) $(CFLAGS) -o build/linux/raylib-test-linux-release
+	$(CP) $(FILES) $(CFLAGS) -O3 -o build/linux/raylib-test-linux-release
 
 release: build/linux/raylib-test-linux-release
 
