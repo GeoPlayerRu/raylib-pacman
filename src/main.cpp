@@ -3,13 +3,13 @@
 #include "world.h"
 
 int main() {	
-	create_world_with(1./5.);
-	
-	World& world = get_world();
 	Vector2i window_size = get_map_size("assets/map");
 	
 	InitWindow(window_size.x, window_size.y, "Zoomba");
 
+	create_world_with(1./5.);
+	
+	World& world = get_world();
 	world.load_atlas();
 	world.set_size(window_size);
 	load_world(world,"assets/map");

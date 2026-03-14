@@ -26,7 +26,6 @@ class Entity{
 
 
 class Pacman : public Entity{
-	const int speed = 16;
 	const int frame_count = 7;
 	const int fps = 24;
 	private:
@@ -70,13 +69,14 @@ class Scorepoint : public Entity {
 };
 
 class Ghost : public Entity {
+	const int respawn_time = 45;
 	private:
 		static unsigned int color_decision;
 		TextureAtlas texture;
-		const int speed = 16;
 		Color color;
 		int direction = 1;
 		Vector2 start_position;
+		int respawn_timer = 0;
 		void recalculate_direction();
 		void try_to_chase();
 	public:
@@ -85,6 +85,14 @@ class Ghost : public Entity {
 		void tick() override;
 		void draw() const override;
 		void collision(Entity* with) override;
+};
+
+class Cherry : public Entity {
+	private:
+		TextureAtlas texture;
+	public:
+		Cherry();
+		void draw() const override;
 };
 
 #endif

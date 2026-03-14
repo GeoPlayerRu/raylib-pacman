@@ -72,6 +72,14 @@ void load_world(World& world,const char* path) {
 				x++;
 
 				break;
+			case 'C':
+				{
+					Cherry* cherry = new Cherry;
+					cherry->position = {(float)x*16,(float)y*16};
+					world.entities.push_back(cherry);
+				}
+				x++;
+				break;
 			default:
 				x++;
 				break;

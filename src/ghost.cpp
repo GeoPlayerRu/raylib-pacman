@@ -35,6 +35,11 @@ void Ghost::tick() {
 
 	World& world = get_world();
 
+	if(respawn_timer>0){
+		respawn_timer--;
+		return;
+	}
+
 	if(dynamic_cast<GhostWall*>(world.grid[world.indexify_position(check_position)]) != nullptr){
 		recalculate_direction();
 		check_position = project_position(direction, 1);
@@ -80,9 +85,22 @@ void Ghost::recalculate_direction(){
 }
 
 void Ghost::draw() const {
-	DrawTextureRec(this->texture.get_texture(), this->texture.rect_view(0,0,16, 16), this->position, this->color);
+	if (get_world().get_killmode() == true || respawn_timer > 0)
+		DrawTextureRec(texture.get_texture(), texture.rect_view(16, 0, 16, 16), position, WHITE);
+	else
+		DrawTextureRec(this->texture.get_texture(), this->texture.rect_view(0,0,16, 16), this->position, this->color);
 }
 
 void Ghost::collision(Entity* with) {
-
+	Pacman* pacman = dynamic_cast<Pacman*>(with);
+	if(pacman != nullptr)
+	{
+		if(get_world().get_killmode()){
+			respawn_timer=respawn_time;
+			position=start_position;
+		} else{
+			pacman->queue_free();
+			get_world().lose();
+		}
+	}
 }

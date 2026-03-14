@@ -10,7 +10,6 @@ void init_world() {
 	World& world = get_world();
 	Vector2i window_size = get_map_size("assets/map");
 	
-	world.load_atlas();
 	world.set_size(window_size);
 	load_world(world,"assets/map");
 
@@ -21,6 +20,7 @@ World::World(){
 	this->entities = {};
 	this->grid = new Entity*[get_capacity()];
 	this->seconds_per_tick = 0;
+	
 	this->clock = 0;
 	this->debug = false;
 	this->bound_offset = 1;
@@ -30,7 +30,7 @@ World::~World(){
 	for(int i = 0; i < this->entities.size();i++) {
 		delete this->entities[i];
 	}
-	UnloadTexture(this->texture_atlas);
+	UnloadTexture(texture_atlas);
 }
 
 void World::load_atlas() {	
@@ -40,6 +40,14 @@ void World::load_atlas() {
 void World::setup(){
 	for(int i = 0; i < this->entities.size(); i++)
 		this->entities[i]->ready();
+}
+
+bool World::get_killmode(){
+	return pacman_killmod_timer > 0;
+}
+
+void World::start_killmode(){
+	pacman_killmod_timer = PACMAN_KILLTIME;
 }
 
 void World::process(){
@@ -63,7 +71,7 @@ void World::process(){
 	for(int i = 0; i < this->entities.size(); i++) {
 		this->entities[i]->process();
 		if (this->clock>=this->seconds_per_tick) {
-			this->entities[i]->tick();
+			this->entities[i]->tick();	
 		}
 
 		// Collision check
@@ -76,6 +84,8 @@ void World::process(){
 
 	if (this->clock>=this->seconds_per_tick) {
 		this->clock = 0;
+		if(pacman_killmod_timer>0)
+			pacman_killmod_timer-=1;
 	}
 	
 	// Check for freed. Very very bad loop

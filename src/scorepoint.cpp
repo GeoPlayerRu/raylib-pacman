@@ -9,3 +9,11 @@ Scorepoint::Scorepoint(){
 void Scorepoint::draw() const {
 	DrawTextureRec(this->texture.get_texture(), this->texture.full_view(), this->position, WHITE);
 }
+
+Cherry::Cherry(){
+	texture = {get_world().get_atlas(),112,16,16,16};
+}
+
+void Cherry::draw() const {
+	DrawTextureRec(texture.get_texture(),texture.full_view(),position,WHITE);
+}

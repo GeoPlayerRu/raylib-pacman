@@ -20,6 +20,7 @@ enum LevelState{
 	Lost = 2,
 };
 
+const int PACMAN_KILLTIME = 45;
 /// Class that holds information about game world
 class World {
 	public:
@@ -45,6 +46,8 @@ class World {
 		int get_capacity() const;
 		int get_columns() const;
 		int get_rows() const;
+		void start_killmode();
+		bool get_killmode();
 		void load_atlas();
 		void lose();
 		void win();
@@ -53,6 +56,7 @@ class World {
 		int points = 0;
 	private:
 		float clock = 0.;
+		int pacman_killmod_timer = 0;
 		int state = 0;
 		void update_grid();
 		Texture2D texture_atlas;
