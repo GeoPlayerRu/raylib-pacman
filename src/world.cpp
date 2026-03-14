@@ -16,6 +16,7 @@ World::~World(){
 	for(int i = 0; i < this->entities.size();i++) {
 		delete this->entities[i];
 	}
+	delete [] this->grid;
 	UnloadTexture(this->texture_atlas);
 }
 
@@ -111,7 +112,7 @@ void World::update_grid() {
 	for(int i = 0; i < this->entities.size(); i++)
 	{
 		int indexified_position = indexify_position(this->entities[i]->position);
-		if (indexified_position < 0 || indexified_position >= this->get_capacity() || grid[indexified_position] != nullptr)
+		if (indexified_position < 0 || indexified_position >= this->get_capacity())
 			continue;
 		grid[indexified_position] = this->entities[i];
 	}
