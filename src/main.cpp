@@ -3,7 +3,7 @@
 #include "world.h"
 
 int main() {	
-	create_world_with(1./10.);
+	create_world_with(1./5.);
 	
 	World& world = get_world();
 	Vector2i window_size = get_map_size("assets/map");

@@ -33,15 +33,37 @@ void load_world(World& world,const char* path) {
 				}
 	
 				break;
+			case 'G':
+				{
+					Ghost* ghost = new Ghost;
+					ghost->position = {(float)x*16,(float)y*16};
+					world.entities.push_back(ghost);
+
+				}
+				x++;
+				break;
 			case '\n':
 				
 				x = 0;
 				y++;
 				break;
 			case '-':
+				{
+					Portal* portal = new Portal;
+					portal->position = {(float)x*16,(float)y*16};
+					world.entities.push_back(portal);
+				}
 				x++;
 				break;
-			default:
+			case '+':
+				{
+					Door* door = new Door;
+					door->position = {(float)x*16,(float)y*16};
+					world.entities.push_back(door);
+				}
+				x++;
+				break;
+			case ' ':
 				{
 					Scorepoint* point = new Scorepoint;
 					point->position = {(float)x*16,(float)y*16};
@@ -49,6 +71,9 @@ void load_world(World& world,const char* path) {
 				}
 				x++;
 
+				break;
+			default:
+				x++;
 				break;
 		}
 		

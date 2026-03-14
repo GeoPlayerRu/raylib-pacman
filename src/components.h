@@ -6,6 +6,8 @@
 #include <raymath.h>
 
 class Entity{
+	protected:
+		Vector2 project_position(int direction, int distance);
 	public:
 		virtual ~Entity(){}
 		
@@ -44,7 +46,10 @@ class Pacman : public Entity{
 		void collision(Entity* with) override;
 };
 
-class Wall : public Entity {
+class PacmanWall{};
+class GhostWall{};
+
+class Wall : public Entity,public PacmanWall,public GhostWall{
 	private:
 		TextureAtlas texture;
 	public:
@@ -53,12 +58,33 @@ class Wall : public Entity {
 		void draw() const override;
 };
 
+class Door : public Entity, public PacmanWall{};
+class Portal : public Entity, public GhostWall{};
+
 class Scorepoint : public Entity {
 	private:
 		TextureAtlas texture;
 	public:
 		Scorepoint();
 		void draw() const override;
+};
+
+class Ghost : public Entity {
+	private:
+		static unsigned int color_decision;
+		TextureAtlas texture;
+		const int speed = 16;
+		Color color;
+		int direction = 1;
+		Vector2 start_position;
+		void recalculate_direction();
+		void try_to_chase();
+	public:
+		Ghost();
+		void ready() override;
+		void tick() override;
+		void draw() const override;
+		void collision(Entity* with) override;
 };
 
 #endif

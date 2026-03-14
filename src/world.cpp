@@ -4,8 +4,22 @@
 #include <raylib.h>
 #include <string>
 
+void init_world() {
+	create_world_with(1./5.);
+	
+	World& world = get_world();
+	Vector2i window_size = get_map_size("assets/map");
+	
+	world.load_atlas();
+	world.set_size(window_size);
+	load_world(world,"assets/map");
+
+	world.setup();
+}
+
 World::World(){
 	this->entities = {};
+	this->grid = new Entity*[get_capacity()];
 	this->seconds_per_tick = 0;
 	this->clock = 0;
 	this->debug = false;
@@ -16,7 +30,6 @@ World::~World(){
 	for(int i = 0; i < this->entities.size();i++) {
 		delete this->entities[i];
 	}
-	delete [] this->grid;
 	UnloadTexture(this->texture_atlas);
 }
 
@@ -36,6 +49,14 @@ void World::process(){
 		this->seconds_per_tick-=0.025;
 	if(IsKeyPressed(KEY_F3))
 		this->seconds_per_tick+=0.025;
+	
+	if(state != LevelState::NotFinished){
+		if(IsKeyPressed(KEY_Q))
+			CloseWindow();
+		if(IsKeyPressed(KEY_R))
+			init_world();
+		return;
+	}
 
 	this->update_grid();
 
@@ -75,6 +96,21 @@ void World::draw() const {
 	for(int i = 0; i < this->entities.size(); i++) {
 		this->entities[i]->draw();
 	}
+
+	if(state != LevelState::NotFinished) {
+		if(state == LevelState::Won)
+		{
+			DrawText("You won!", 16, 16, 24, WHITE);
+		}
+		else {
+			DrawText("You lost!",16,16,24,WHITE);
+		}
+		DrawText("q to quit, r to restart",0,40,16,WHITE);
+		DrawText(TextFormat("Score: %i",this->points),16,56,16,WHITE);
+
+	}
+
+
 	if (this->debug == false)
 		return;
 
@@ -122,7 +158,7 @@ void World::set_size(Vector2i size){
 	this->width = size.x;
 	this->height = size.y; 
 	if(this->grid != nullptr)
-		delete [] this->grid;
+		delete [] grid;
 	this->grid = new Entity*[this->get_capacity()];
 }
 
@@ -138,11 +174,20 @@ int World::get_columns() const{
 	return this->width/CELL_SIZE;
 }
 
+void World::lose(){
+	state = LevelState::Lost;
+}
+
+void World::win(){
+	state = LevelState::Won;
+}
+
 Texture2D* World::get_atlas() {
 	return &this->texture_atlas;
 }
 
 void create_world_with(float seconds_per_tick){
+	get_world() = World();
 	get_world().seconds_per_tick = seconds_per_tick;
 }
 

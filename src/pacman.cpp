@@ -24,20 +24,35 @@ Pacman::Pacman(Vector2 position) {
 }
 
 void Pacman::tick() {
-	// Input handling
-	if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) {this->facing=1;}
-	if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) {this->facing=2;}
-	if (IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN)) {this->facing=3;}
-	if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {this->facing=0;}
-
-	// Movement in direction
-	double angle = PI/2.0*facing;
-	Vector2 direction = {(float)(cos(angle)),(float)(sin(-angle))};
-	Vector2 new_position = Vector2Add(this->position,Vector2Scale(direction, (float)speed)); 
-	
 	World& world = get_world();
+	// Input handling
+	if (
+			(IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) 
+			&& dynamic_cast<PacmanWall*>(world.grid[world.indexify_position(project_position(1, 1))]) == nullptr
+			) 
+		this->facing=1;
 
-	if (dynamic_cast<Wall*>(world.grid[world.indexify_position(new_position)]) == nullptr){
+	else if (
+			(IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) 
+			&& dynamic_cast<PacmanWall*>(world.grid[world.indexify_position(project_position(2, 1))]) == nullptr
+			) 
+		this->facing=2;
+
+	else if ((IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN)) 
+			&& dynamic_cast<PacmanWall*>(world.grid[world.indexify_position(project_position(3, 1))]) == nullptr
+			) 
+		this->facing=3;
+
+	else if (
+			(IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT))
+			&& dynamic_cast<PacmanWall*>(world.grid[world.indexify_position(project_position(0, 1))]) == nullptr
+			)
+		this->facing=0;
+	
+	// Movement in direction
+	Vector2 new_position = project_position(this->facing, 1);	
+
+	if (dynamic_cast<PacmanWall*>(world.grid[world.indexify_position(new_position)]) == nullptr){
 		this->position=new_position;
 	}
 	
@@ -79,7 +94,11 @@ void Pacman::collision(Entity* with){
 		score->queue_free();
 		get_world().points+=10;
 	}
-
+	Ghost* ghost = dynamic_cast<Ghost*>(with);
+	if (ghost != nullptr){
+		queue_free();
+		get_world().lose();
+	}
 }
 
 

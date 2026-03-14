@@ -14,6 +14,12 @@ struct Vector2i{
 	int y;
 };
 
+enum LevelState{
+	NotFinished = 0,
+	Won = 1,
+	Lost = 2,
+};
+
 /// Class that holds information about game world
 class World {
 	public:
@@ -40,16 +46,20 @@ class World {
 		int get_columns() const;
 		int get_rows() const;
 		void load_atlas();
+		void lose();
+		void win();
 		Texture2D* get_atlas();
 		int indexify_position(Vector2 vector);
 		int points = 0;
 	private:
 		float clock = 0.;
+		int state = 0;
 		void update_grid();
 		Texture2D texture_atlas;
 };
 
 void create_world_with(float seconds_per_tick);
+void init_world();
 World& get_world(); // Thanks, 2ndbeam, helps a lot
 Vector2i get_map_size(const char* path);
 void load_world(World& world, const char* path);
