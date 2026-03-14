@@ -30,7 +30,6 @@ void Ghost::ready() {
 }
 
 void Ghost::tick() {
-	try_to_chase();
 	Vector2 check_position = project_position(direction, 1);
 
 	World& world = get_world();
@@ -46,10 +45,21 @@ void Ghost::tick() {
 	}
 
 	position = check_position;
+	try_switch_direction();
 }
 
-void Ghost::try_to_chase(){
-	// Todo
+void Ghost::try_switch_direction(){
+	/*if(rand()%10!=0)
+		return;
+	
+	World world = get_world();
+
+	if(dynamic_cast<GhostWall*>(world.grid[world.indexify_position(project_position((direction+1)%4, 1))]) == nullptr){
+		direction = (direction+1)%4;
+	}
+	else if(dynamic_cast<GhostWall*>(world.grid[world.indexify_position(project_position((direction-1)%4,1))]) == nullptr){
+		direction = (direction-1)%4;
+	}*/
 }
 
 void Ghost::recalculate_direction(){

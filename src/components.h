@@ -79,7 +79,7 @@ class Ghost : public Entity {
 		Vector2 start_position;
 		int respawn_timer = 0;
 		void recalculate_direction();
-		void try_to_chase();
+		void try_switch_direction();
 	public:
 		Ghost();
 		void ready() override;
