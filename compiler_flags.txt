@@ -1,4 +1,3 @@
 -Wall
--lraylib
 -lstdc++
 -lm
