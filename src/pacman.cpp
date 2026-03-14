@@ -93,12 +93,18 @@ void Pacman::collision(Entity* with){
 	if (score != nullptr) {
 		score->queue_free();
 		get_world().points+=10;
+		get_world().total_scorepoints--;
+		if(get_world().total_scorepoints == 0)
+			get_world().win();
 	}
 	Cherry* cherry = dynamic_cast<Cherry*>(with);
 	if (cherry != nullptr) {
 		cherry->queue_free();
 		get_world().points+=30;
 		get_world().start_killmode();
+		get_world().total_scorepoints--;
+		if(get_world().total_scorepoints == 0)
+			get_world().win();
 	}
 }
 

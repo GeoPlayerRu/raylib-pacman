@@ -66,6 +66,7 @@ class Scorepoint : public Entity {
 	public:
 		Scorepoint();
 		void draw() const override;
+		void ready() override;
 };
 
 class Ghost : public Entity {
@@ -93,6 +94,7 @@ class Cherry : public Entity {
 	public:
 		Cherry();
 		void draw() const override;
+		void ready() override;
 };
 
 #endif

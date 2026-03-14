@@ -33,6 +33,7 @@ class World {
 		int width = 0;
 		int height = 0;
 		int bound_offset = 1;
+		int total_scorepoints = 0;
 
 		void setup();     /// Sets up game world. 
 					      /// Should be called once when entites are set.

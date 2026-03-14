@@ -4,18 +4,6 @@
 #include <raylib.h>
 #include <string>
 
-void init_world() {
-	create_world_with(1./5.);
-	
-	World& world = get_world();
-	Vector2i window_size = get_map_size("assets/map");
-	
-	world.set_size(window_size);
-	load_world(world,"assets/map");
-
-	world.setup();
-}
-
 World::World(){
 	this->entities = {};
 	this->grid = new Entity*[get_capacity()];
@@ -57,12 +45,10 @@ void World::process(){
 		this->seconds_per_tick-=0.025;
 	if(IsKeyPressed(KEY_F3))
 		this->seconds_per_tick+=0.025;
-	
+	if(IsKeyPressed(KEY_Q))
+		CloseWindow();
+
 	if(state != LevelState::NotFinished){
-		if(IsKeyPressed(KEY_Q))
-			CloseWindow();
-		if(IsKeyPressed(KEY_R))
-			init_world();
 		return;
 	}
 
@@ -115,7 +101,7 @@ void World::draw() const {
 		else {
 			DrawText("You lost!",16,16,24,WHITE);
 		}
-		DrawText("q to quit, r to restart",0,40,16,WHITE);
+		DrawText("q to quit",0,40,16,WHITE);
 		DrawText(TextFormat("Score: %i",this->points),16,56,16,WHITE);
 
 	}

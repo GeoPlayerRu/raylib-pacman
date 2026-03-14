@@ -21,15 +21,15 @@ int main() {
 	while (WindowShouldClose() == false) {
 		
 		if(IsKeyPressed(KEY_F1))
-			world.debug = !world.debug;
+			get_world().debug = !get_world().debug;
 
-		world.process();		
+		get_world().process();		
 
 		BeginDrawing();
 
 		ClearBackground(BLACK);
 		
-		world.draw();
+		get_world().draw();
 
 		EndDrawing();
 	}
