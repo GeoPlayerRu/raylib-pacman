@@ -1,7 +1,7 @@
 CP=clang
 CROSS_CP=x86_64-w64-mingw32-g++
 CFLAGS=$(shell cat compiler_flags.txt | tr '\n' ' ')
-WINCFLAGS=-Wall -lstdc++ -lm -Iinclude/windows -lwinmm -lgdi32 -Llib/windows/ -lraylib
+WINCFLAGS=-Wall -lm -Iinclude/windows -lraylib -lopengl32 -lwinmm -lgdi32 -lshell32 -Llib/windows/ -static
 FILES=$(wildcard src/*.cpp)
 
 .PHONY : clean cross-windows all release debug
