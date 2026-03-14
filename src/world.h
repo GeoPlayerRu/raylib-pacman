@@ -19,13 +19,13 @@ class World {
 	public:
 		World();
 		~World();
-		bool debug;
+		bool debug = false;
 		std::vector<Entity*> entities; /// Main subjects of game world.
 		Entity** grid;   /// Grid representation
-		float seconds_per_tick; 	   /// Internal clock speed
-		int width;
-		int height;
-		int bound_offset;
+		float seconds_per_tick = 0.; 	   /// Internal clock speed
+		int width = 0;
+		int height = 0;
+		int bound_offset = 1;
 
 		void setup();     /// Sets up game world. 
 					      /// Should be called once when entites are set.
@@ -42,9 +42,9 @@ class World {
 		void load_atlas();
 		Texture2D* get_atlas();
 		int indexify_position(Vector2 vector);
-		int points;
+		int points = 0;
 	private:
-		float clock;
+		float clock = 0.;
 		void update_grid();
 		Texture2D texture_atlas;
 };

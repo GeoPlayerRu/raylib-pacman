@@ -19,7 +19,7 @@ class Entity{
 		void queue_free();
 		bool get_free_flag();
 	private:
-		bool free_queued;
+		bool free_queued = false;
 };
 
 
@@ -29,11 +29,11 @@ class Pacman : public Entity{
 	const int fps = 24;
 	private:
 		TextureAtlas texture;
-		int facing;
+		int facing = 0;
 		Rectangle getTextureRect() const;
 	public:
-		unsigned char frame;
-		float time; 
+		unsigned char frame = 0.;
+		float time = 0.; 
 
 		Pacman();
 		Pacman(Vector2 position);
